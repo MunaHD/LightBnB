@@ -76,7 +76,7 @@ const addUser =  function(user) {
   return pool
   .query(sqlQuery, [name, email, password])
     .then(result => {
-      console.log(result.rows[0]);
+      return result.rows[0];
     })
     .catch(err => {
       return null;
@@ -114,8 +114,6 @@ const getAllReservations = function(guest_id, limit = 10) {
       return null;
     });
 
-
-
 }
 exports.getAllReservations = getAllReservations;
 
@@ -129,7 +127,6 @@ exports.getAllReservations = getAllReservations;
  */
  const getAllProperties = (options, limit = 10) => {
   
-  console.log(options)
 
   const queryParams = [];
    
