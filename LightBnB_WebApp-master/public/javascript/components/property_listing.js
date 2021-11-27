@@ -22,12 +22,21 @@ $(() => {
             <div class="property-listing__price">$${property.cost_per_night/100.0}/night</div>
           </footer>
         </section> 
-      
+
+        <div class="new-reservation-form" data-property-id="${property.id}"> 
+        <button>Make A Reservation</button>
+        </div>
     </article>
     `
   }
 
   window.propertyListing.createListing = createListing;
-  
-  $('body').on('click', 'reservation-form', )
+
+  $('body').on('click', '.new-reservation-form',function() {
+    const propertyId = $(this).attr("data-property-id");
+
+    localStorage.setItem('property_id', propertyId);
+    views_manager.show('newReservation');
+  });
+
 });

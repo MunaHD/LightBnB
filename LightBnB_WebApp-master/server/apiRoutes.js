@@ -27,6 +27,7 @@ module.exports = function(router, database) {
     const userId = req.session.userId;
     database.addProperty({...req.body, owner_id: userId})
       .then(property => {
+        
         res.send(property);
       })
       .catch(e => {
@@ -34,6 +35,19 @@ module.exports = function(router, database) {
         res.send(e)
       });
   });
+
+  router.post('/reservations', (req, res) => {
+    const userId = req.session.userId;
+    database.addReservation({...req.body, guest_id: userId})
+      .then(reservation => {
+        res.send(reservation); // HAS ALL THE INFORMATIONS ABOUT THE NEW RESERVATION
+      })
+      .catch(e => {
+        console.error(e);
+        res.send(e);
+      });
+  });
+
 
   return router;
 }

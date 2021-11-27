@@ -193,14 +193,13 @@ exports.getAllReservations = getAllReservations;
     LIMIT $${queryParams.length};
     `;
   }
- 
-   console.log(queryParams);
-   console.log(queryString, queryParams);
+
  
    return pool.query(queryString, queryParams).then((res) => res.rows);
  
   
 };
+
 exports.getAllProperties = getAllProperties;
 
 
@@ -274,4 +273,33 @@ const addProperty = function(property) {
 }
 exports.addProperty = addProperty;
 
+
+/**
+ * Add a reservation to the database
+ * @param {{}} property An object containing all of the property details.
+ * @return {Promise<{}>} A promise to the property.
+ */
+const addReservation = function(reservation) {
+
+  const sqlQuery = `
+  INSERT INTO reservations
+  (start_date,
+  end_date,
+  property_id,
+  guest_id)
+  VALUES ($1, $2, $3, $4)
+  RETURNING *;
+  `;
+  
+
+  return pool
+  .query(sqlQuery, 
+    [reservation.start_date,
+     reservation.end_date,
+     reservation.property_id,
+     reservation.guest_id])
+    .then(result => result.rows)
+    
+}
+exports.addReservation = addReservation;
 
